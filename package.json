@@ -1,0 +1,22 @@
+{
+    "name": "passthrough"
+  , "description": "Tiny utility classes for web apps."
+  , "version": "0.1.0"
+  , "private": true
+  , "author": "Meryn Stol <merynstol@gmail.com>"
+  , "main": "./lib/passthrough"
+  , "repository": {
+      "type": "git"
+      ,"url": "http://github.com/meryn/passthrough.git"
+    }
+  , "dependencies": {
+    "qs": "0.4.2"
+  }
+  , "devDependencies": {
+    "vows": "0.6.2"
+  }
+  ,"engines": {
+    "node": "0.6.x",
+    "npm":  "1.1.x"
+  }
+}
