@@ -1,7 +1,7 @@
 {
   "name": "passthrough",
   "description": "Tiny utility classes for web apps.",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "author": "Meryn Stol <merynstol@gmail.com>",
   "main": "./lib/passthrough",
   "repository": {
