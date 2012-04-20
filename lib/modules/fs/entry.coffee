@@ -1,3 +1,5 @@
+fs = require 'fs'
+
 module.exports = class FSEntry
   constructor: (path, stat) ->
     @path = path
@@ -26,6 +28,13 @@ module.exports = class FSEntry
   
   hasPath: (path) ->
     @path is path
+    
+  entryNames: ->
+    throw new Error "#{@path} is not a directory." unless @isDirectory()
+    fs.readdirSync @path
+    
+  getEntry: (entryName) ->
+    new FSEntry "#{@path}/#{entryName}"
   
   pathContains: (searchString) ->
     new RegExp(searchString,"g").test @path
