@@ -9,29 +9,33 @@ Passthrough =
   Core: require './modules/core'
 
 if environ.node()
-  currentDir = "."
-  Passthrough.ChildProcessManager = require "#{currentDir}/modules/child_process_manager"
-  Passthrough.FS = require "#{currentDir}/modules/fs/_"
+  ptModules =
+    System: "system/_"
+    Heroku: "heroku/_"
+    MongoDB: "mongodb/_"
+    Process: "process/_"
+    FS: "fs/_"
+  Passthrough[moduleName] = require "./modules/#{filePath}" for moduleName, filePath of ptModules
 
 module.exports = Passthrough
 
 Passthrough.requireSetting = (name) ->
-  throw new Error("process.env['#{name}'] is undefined.") if not process.env[name]?
+  throw new Error "process.env['#{name}'] is undefined." if not process.env[name]?
   return process.env[name]
 
 Passthrough.limitCallRate = (maxRate, action) ->
   throw new Error "No action function supplied." unless action? and typeof action == 'function'
-  lastCall = undefined
+  lastCallTime = undefined
   maxRate = maxRate / 1000 # given in calls per second, but internally calls per milisecond
   minWait = 1 / maxRate
   doAction = ->
-    lastCall = new Date
+    lastCallTime = new Date
     action()
   dontDoAction = ->
     console.log "Call rate limit in effect." if Passthrough.debug
   return ->
-    return doAction() unless lastCall?
-    timeBetween = new Date - lastCall
+    return doAction() unless lastCallTime?
+    timeBetween = new Date - lastCallTime
     Passthrough.Core.log "Time between: #{timeBetween}. Min wait: #{minWait}"
     return doAction() if timeBetween > minWait
     return dontDoAction()
