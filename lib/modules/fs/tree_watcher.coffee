@@ -15,6 +15,7 @@ module.exports = class TreeWatcher
     @monitor = null
     @options = _.defaults options, root: process.cwd()
     @options = Core.makeFunctional @options, functionGenerators
+    @options.listeners = {} unless @options.listeners?
     watchOptions = {}
     if options.treeWalkFilter?
       watchOptions.filter = (path, stat) => @options.treeWalkFilter(new Entry(path,stat))
@@ -30,7 +31,8 @@ module.exports = class TreeWatcher
     
   handle: (eventType, entryPath, currStat, prevStat) ->
     event = new Event(eventType, new Entry(entryPath, currStat), prevStat)
+    @options.listeners.evaluate? event
     if @filter event
-      Core.log "Rejected #{event}"
+      @options.listeners.reject? event
     else
-      @options.action event
+      @options.listeners.accept? event
