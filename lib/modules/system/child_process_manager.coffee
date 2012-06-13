@@ -7,7 +7,9 @@ module.exports = class ChildProcessManager
     @startProcess() if @options.start
     
   startProcess: ->
-    return @options.listener.error "Already running" if @process?
+    if @process?
+      @options.listeners.error "Already running" if @options.listeners.error
+      return false
     @options.listeners.start() if @options.listeners.start?
     @process = ChildProcess.spawn(@options.command, @options.arguments)
     @process.stdout.on('data', @options.listeners.stdOut) if @options.listeners.stdOut?
@@ -25,6 +27,7 @@ module.exports = class ChildProcessManager
         @process = null
         @options.listeners.crash signal
         @options.listeners.exit(code, signal) if @options.listeners.exit
+    return true
   
   stopProcess: ->
     if @process?
