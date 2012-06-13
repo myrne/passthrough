@@ -23,7 +23,7 @@ Passthrough.requireSetting = (name) ->
   throw new Error "process.env['#{name}'] is undefined." if not process.env[name]?
   return process.env[name]
 
-Passthrough.limitCallRate = (maxRate, action) ->
+Passthrough.limitCallRate = (maxRate, action, throttleAction) ->
   throw new Error "No action function supplied." unless action? and typeof action == 'function'
   lastCallTime = undefined
   maxRate = maxRate / 1000 # given in calls per second, but internally calls per milisecond
@@ -31,11 +31,10 @@ Passthrough.limitCallRate = (maxRate, action) ->
   doAction = ->
     lastCallTime = new Date
     action()
-  dontDoAction = ->
-    console.log "Call rate limit in effect." if Passthrough.debug
+  dontDoAction = (timeBetween, minWait) ->
+    throttleAction? timeBetween, minWait
   return ->
     return doAction() unless lastCallTime?
     timeBetween = new Date - lastCallTime
-    Passthrough.Core.log "Time between: #{timeBetween}. Min wait: #{minWait}"
     return doAction() if timeBetween > minWait
-    return dontDoAction()
+    return dontDoAction timeBetween, minWait
