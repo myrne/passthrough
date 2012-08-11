@@ -3,7 +3,15 @@ fs = require 'fs'
 module.exports = class FSEntry
   constructor: (path, stat) ->
     @path = path
-    @stat = if stat? then stat else fs.statSync path
+    if stat?
+      @stat = stat
+    else
+      try 
+        stat = fs.lstatSync path
+      catch error
+        console.log error
+        stat = new StatStub
+      @stat = stat
 
   isDirectory: ->
     @stat.isDirectory()
@@ -41,3 +49,10 @@ module.exports = class FSEntry
     
   toString: ->
     @path
+  
+  
+class StatStub
+  isDirectory: -> false
+  isFile: -> false
+  isSocket: -> false
+  isSymbolicLink: -> false
