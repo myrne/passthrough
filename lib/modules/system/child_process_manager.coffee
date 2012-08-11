@@ -11,7 +11,9 @@ module.exports = class ChildProcessManager
       @options.listeners.error "Already running" if @options.listeners.error
       return false
     @options.listeners.start() if @options.listeners.start?
-    @process = ChildProcess.spawn(@options.command, @options.arguments)
+    spawnOptions = {}
+    spawnOptions.env = @options.environment if @options.environment?
+    @process = ChildProcess.spawn(@options.command, @options.arguments, spawnOptions)
     @process.stdout.on('data', @options.listeners.stdOut) if @options.listeners.stdOut?
     @process.stderr.on('data', @options.listeners.stdErr) if @options.listeners.stdErr?
     @process.on "exit", (code, signal) =>
