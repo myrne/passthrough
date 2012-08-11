@@ -5,13 +5,13 @@ module.exports = class Event
     @prevStat = prevStat
   
   isChange: ->
-    @type == 'change'
+    @type == 'changed'
     
   isCreation: ->
-    @type == 'creation'
+    @type == 'created'
 
   isDeletion: ->
-    @type == 'deletion'
+    @type == 'removed'
     
   toString: ->
-    "#{@type} of #{@entry}"
+    "#{@type}: #{@entry}"
