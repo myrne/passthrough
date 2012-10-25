@@ -19,7 +19,7 @@ devDependencies:
   vows: "0.6.x"
 
 engines:
-  node: "0.6.x"
+  node: "0.8.x"
   npm: "1.1.x"
 
 optionalDependencies: {}
