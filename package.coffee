@@ -1,6 +1,6 @@
 name: "passthrough"
 description: "Tiny utility classes for web apps."
-version: "0.5.1"
+version: "0.5.2"
 author: "Meryn Stol <merynstol@gmail.com>"
 main: "./lib/_"
 repository:
