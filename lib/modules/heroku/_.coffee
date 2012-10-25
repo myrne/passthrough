@@ -10,7 +10,7 @@ Herokutools.getAppConfig = (callbacks) ->
       success: (output) ->
         outputLines = output.split "\n"
         settings = {}
-        pattern = /^(\w+)\s+\=\> (.*)$/
+        pattern = /^(\w+):\s+(.*)$/
         for line in outputLines
           settings[result[1]] = result[2] if result = line.match pattern
         callbacks.success settings
