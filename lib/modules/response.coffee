@@ -20,10 +20,10 @@ module.exports = class Response
     @response.end
   
   redirect: (url, status = 301, headers = {}) ->
-    @response.setHeader Location: url
+    @response.setHeader "Location", url
     @response.statusCode = status
     @response.setHeader name, value for name, value of headers
-    @response.end
+    @response.end()
   
   content: (body, status = 200, charset = "utf-8", headers = {}) ->
     content_length = if Buffer.isBuffer(body) then body.length else Buffer.byteLength(body)
