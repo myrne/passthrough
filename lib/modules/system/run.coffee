@@ -8,7 +8,6 @@ module.exports = run = (options) ->
       args.push "--#{name}" unless value is false
       args.push "#{value}" unless value is true
   args.push options.object if options.object
-  console.log args
   normalOutput = ''
   errorOutput = ''
   processManager = new ChildProcessManager
