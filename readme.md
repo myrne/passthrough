@@ -1,6 +1,8 @@
 Passthrough
 ===========
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/braveg1rl/passthrough.svg)](https://greenkeeper.io/)
+
 Tiny utility classes for web apps. Written in CoffeeScript.
 
 Project state
