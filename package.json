@@ -9,15 +9,15 @@
     "url": "git://github.com/meryn/passthrough.git"
   },
   "dependencies": {
-    "qs": "0.4.x",
+    "qs": "~6.3.1",
     "underscore": "1.x",
-    "watch": "0.5.x",
+    "watch": "~1.0.2",
     "node.extend": "1.x",
-    "environ": "1.x",
-    "watchr": "2.x"
+    "environ": "^2.0.0",
+    "watchr": "^3.0.1"
   },
   "devDependencies": {
-    "vows": "0.6.x"
+    "vows": "~0.8.1"
   },
   "engines": {
     "node": "0.8.x",
